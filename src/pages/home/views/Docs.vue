@@ -2,7 +2,7 @@
 import CommonDoc from '@/components/common/docs';
 
 export default {
-  render () {
+  render (h) {
     return (
       <div>
         <CommonDoc />
