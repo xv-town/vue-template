@@ -11,6 +11,6 @@ build: npm run build
 
 ```
 webpack: 4
-babel: 6
-vue:: 2.6.10
+babel: 7
+vue: 2.6.10
 ```

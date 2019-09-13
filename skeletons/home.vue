@@ -2,7 +2,7 @@
 import Vue from 'vue';
 
 export default new Vue({
-  render() {
+  render (h) {
     return (
       <div>
         <div class="pre-Skeletons" id="skeletons-vue-home" style="display: none;">

@@ -3,7 +3,7 @@ import './App.scss';
 
 export default {
   name: 'App',
-  render () {
+  render (h) {
     return <div id="app">
       <div id="nav">
         <router-link to="/vue/home">Home</router-link> |&nbsp;
