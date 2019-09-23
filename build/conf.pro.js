@@ -52,6 +52,7 @@ let newWebpack = merge(baseWebpack, {
     chunkFilename: utils.assetsPath(`js/chunks/[name].js?t=${APP_CONFIG.production.timeStamp}`),
     publicPath: APP_CONFIG.production.assetsPublicPath
   },
+  devtool: 'cheap-module-source-map',
   plugins: plugins,
 });
 
