@@ -31,9 +31,16 @@ const CONFIG = {
   version: '0.0.1',
   author: 'xiaoYown',
   port: PORT,
+
   templateSuffix: 'html', // 未编译文件后缀
   templatePath: path.resolve(__dirname, `./src/htmls`),
-  assetsFileDirectory: path.resolve(__dirname, `./static`),
+  assetsFileDirectory: path.resolve(__dirname, `./static`), // 静态资源路径
+
+  publicPath: '/', // 打包后路径资源前缀
+  assetsJSFileDirectory: 'static/vue/js', // js 文件生成路径
+  assetsJSChunksFileDirectory: 'static/vue/js/chunks', // js chunks 文件生成路径
+  assetsCSSFileDirectory: 'static/vue/css', // css 文件生成路径
+
   // 生产打包时生效
   externals: IS_DEV ? undefined : {
     'vue': 'Vue',
@@ -56,7 +63,8 @@ const CONFIG = {
     url: `http://${IP}:${PORT}/vue/home`,
     port: PORT,
     templateFileSuffix: 'html', // 已编译模板后缀
-    assetsPublicPath: 'static',
+    assetsPublicPath: '/static',
+    assetsFileDirectory: path.resolve(__dirname, `./static`), // 静态资源存放路径
     rewrites: [
       { from: /\/vue\/home(\/|$)/, to: '/home.html' },
       { from: /\/vue\/login(\/|$)/, to: '/login.html' },
@@ -75,18 +83,11 @@ const CONFIG = {
 
   production: {
     timeStamp: BUILD_TIME.time,
-
     templateFileSuffix: 'html', // 已编译模板后缀
     assetsRoot: path.resolve(__dirname, './dist'),
-    assetsFileDirectory: 'static/vue', // 文件生成到 dist 下的路径
-    assetsPublicPath: '/', // 打包后路径资源前缀
-    copyFromDirectory: path.resolve(__dirname, './static'), // 拷贝静态资源文件夹路径
-    copyDictDirectory: path.resolve(__dirname, './dist'), // 拷贝目标路径
 
-    // 打包成功后江 dist 下文件拷贝到对应文件夹下
-    takeToProject: false, // 是否将 dist 的文件拷贝到项目下
-    viewsFolder: '/xiaoyown/web/blog-koa/views/react',
-    staticFolder: '/xiaoyown/web/blog-koa/static',
+    copyFromDirectory: path.resolve(__dirname, './static'), // 拷贝静态资源 源路径
+    copyDictDirectory: path.resolve(__dirname, './dist'), // 拷贝静态资源 目标路径
   },
 };
 

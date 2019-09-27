@@ -7,7 +7,6 @@ const AssetsCDNWebpackPlugin = require('assets-cdn-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const entries = require('./entries');
 const APP_CONFIG = require('../app.config');
-const utils = require('./utils');
 
 // 开辟一个线程池
 // 拿到系统CPU的最大核数，happypack 将编译工作灌满所有线程
@@ -84,7 +83,7 @@ module.exports = {
         loader: 'url-loader',
         query: {
           limit: 8192,
-          name: utils.assetsPath('images/[name].[ext]'),
+          name: path.posix.join(APP_CONFIG.assetsJSFileDirectory, 'images/[name].[ext]'),
         }
       },
     ]

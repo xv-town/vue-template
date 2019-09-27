@@ -46,6 +46,6 @@ setTimeout(() => {
   devMiddleware.invalidate();
 }, 1000);
 
-app.use('/' + APP_CONFIG.development.assetsPublicPath, express.static(APP_CONFIG.assetsFileDirectory));
+app.use(APP_CONFIG.development.assetsPublicPath, express.static(APP_CONFIG.development.assetsFileDirectory));
 
 module.exports = app.listen(APP_CONFIG.port);
