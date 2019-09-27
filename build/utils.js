@@ -1,6 +1,4 @@
 const networkInterfaces = require('os').networkInterfaces();
-const APP_CONFIG = require('../app.config');
-const path = require('path');
 
 exports.getIPAdress = function () {
   let IP;
