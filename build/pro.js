@@ -1,10 +1,8 @@
 require('shelljs/global'); // can replace unix shell scripts on nodejs
 
-const path = require('path');
 const APP_CONFIG = require('../app.config');
 const ora =	require('ora');
 const webpack =	require('webpack');
-const entries = require('./entries');
 
 let webpackMerge = require('./conf.pro');
 let spinner = ora('building for production...');
@@ -25,15 +23,4 @@ webpack(webpackMerge, function (err, stats) {
     chunks: false,
     chunkModules: false
   }) + '\n');
-  if (APP_CONFIG.production.takeToProject) {
-    mkdir(APP_CONFIG.production.viewsFolder);
-    // copy template
-    Object.keys(entries).forEach(page => {
-      let fileName = `${page}.${APP_CONFIG.production.templateFileSuffix}`;
-      let viewPath = path.join(APP_CONFIG.production.assetsRoot, fileName);
-      cp('-R', viewPath, path.join(APP_CONFIG.production.viewsFolder, fileName))
-    });
-    // copy static source
-    cp('-R', path.join(APP_CONFIG.production.assetsRoot, APP_CONFIG.production.assetsFileDirectory), APP_CONFIG.production.staticFolder);
-  }
 });
