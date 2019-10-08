@@ -7,12 +7,11 @@ const AssetsCDNPWebpackPlugin = require('assets-cdn-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const entries = require('./entries');
 const APP_CONFIG = require('../app.config');
-const utils = require('./utils');
 
 // 开辟一个线程池
 // 拿到系统CPU的最大核数，happypack 将编译工作灌满所有线程
 // const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-const IS_DEV = process.env.NODE_ENV !== 'development';
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 module.exports = {
   entry: entries,
@@ -29,7 +28,7 @@ module.exports = {
             ] : []
           ),
           {
-            loader: !IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+            loader: IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
             options: {
               sourceMap: true,
               hmr: IS_DEV,
@@ -71,7 +70,7 @@ module.exports = {
           hotReload: IS_DEV // disables Hot Reload
         }
       },
-      { // eslint 检查
+      {
         test: /\.js?$/,
         exclude: /node_modules/,
         include: [path.join(__dirname, '../src')],
@@ -80,11 +79,19 @@ module.exports = {
         }]
       },
       {
+        test: /\.ts[x]?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         query: {
           limit: 8192,
-          name: utils.assetsPath('images/[name].[ext]'),
+          name: path.posix.join(APP_CONFIG.assetsJSFileDirectory, 'images/[name].[ext]'),
         }
       },
     ]
@@ -107,7 +114,7 @@ module.exports = {
       '@': path.resolve(__dirname, '../src'),
       'vue$': 'vue/dist/vue.esm.js',
     },
-    extensions: ['.js', '.jsx', '.vue']
+    extensions: ['.ts', '.js', '.tsx', '.vue']
   },
   externals: APP_CONFIG.externals
 };

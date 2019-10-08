@@ -4,7 +4,7 @@ function getEntries(folder) {
   let views = fs.readdirSync(folder);
   let entries = {};
   views.forEach(view => {
-    entries[view] = [`${folder}/${view}/index.js`];
+    entries[view] = [`${folder}/${view}/index.ts`];
   });
   return entries;
 }

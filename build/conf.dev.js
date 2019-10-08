@@ -32,11 +32,11 @@ Object.keys(baseWebpack.entry).forEach(function(name){
 let newWebpack = merge(baseWebpack, {
   mode: 'development',
   output: {
-    filename: '[name].js',
-    publicPath: '/'
+    filename: path.posix.join(APP_CONFIG.assetsJSFileDirectory, '[name].js'),
+    chunkFilename: path.posix.join(APP_CONFIG.assetsJSChunksFileDirectory, '[name].js'),
+    publicPath: APP_CONFIG.publicPath
   },
   devtool: 'cheap-module-eval-source-map',
-  // devtool: '#source-map',
   plugins: plugins
 });
 

@@ -1,6 +1,4 @@
 const networkInterfaces = require('os').networkInterfaces();
-const APP_CONFIG = require('../app.config');
-const path = require('path');
 
 exports.getIPAdress = function () {
   let IP;
@@ -13,8 +11,3 @@ exports.getIPAdress = function () {
   })
   return IP;
 }
-
-exports.assetsPath = function (_path) {
-  var assetsSubDirectory = APP_CONFIG.production.assetsFileDirectory;
-  return path.posix.join(assetsSubDirectory, _path);
-};

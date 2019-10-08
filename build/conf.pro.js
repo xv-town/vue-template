@@ -1,5 +1,4 @@
 const path = require('path');
-const utils = require('./utils');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const APP_CONFIG = require('../app.config');
@@ -21,8 +20,8 @@ let plugins = [
     banner: BANNER
   }),
   new MiniCssExtractPlugin({
-    filename: path.posix.join(APP_CONFIG.production.assetsFileDirectory, `css/[name].css?t=${APP_CONFIG.production.timeStamp}`),
-    chunkFilename: path.posix.join(APP_CONFIG.production.assetsFileDirectory, `css/chunks/[id].css?t=${APP_CONFIG.production.timeStamp}`)
+    filename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `[name].css?t=${APP_CONFIG.production.timeStamp}`),
+    chunkFilename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `chunks/[id].css?t=${APP_CONFIG.production.timeStamp}`)
   }),
   // new BundleAnalyzerPlugin()
 ];
@@ -30,7 +29,7 @@ let plugins = [
 Object.keys(baseWebpack.entry).forEach(name => {
   let plugin = new HtmlWebpackPlugin({
     filename: path.resolve(APP_CONFIG.production.assetsRoot, `${name}.${APP_CONFIG.production.templateFileSuffix}`),
-    template: path.resolve(__dirname, `../src/htmls/${name}.${APP_CONFIG.templateSuffix}`),
+    template: path.resolve(APP_CONFIG.templatePath, `${name}.${APP_CONFIG.templateSuffix}`),
     inject: true,
     chunks: ['vendor', name], 		// 多文件打包引入
     chunksSortMode: 'dependency',
@@ -48,10 +47,11 @@ let newWebpack = merge(baseWebpack, {
   mode: 'production',
   output: {
     path: APP_CONFIG.production.assetsRoot,
-    filename: utils.assetsPath(`js/[name].js?t=${APP_CONFIG.production.timeStamp}`),
-    chunkFilename: utils.assetsPath(`js/chunks/[name].js?t=${APP_CONFIG.production.timeStamp}`),
-    publicPath: APP_CONFIG.production.assetsPublicPath
+    filename: path.posix.join(APP_CONFIG.assetsJSFileDirectory, `[name].js?t=${APP_CONFIG.production.timeStamp}`),
+    chunkFilename: path.posix.join(APP_CONFIG.assetsJSChunksFileDirectory, `[name].js?t=${APP_CONFIG.production.timeStamp}`),
+    publicPath: APP_CONFIG.publicPath
   },
+  devtool: 'cheap-module-source-map',
   plugins: plugins,
 });
 
