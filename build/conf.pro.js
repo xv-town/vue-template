@@ -48,7 +48,7 @@ let newWebpack = merge(baseWebpack, {
   output: {
     path: APP_CONFIG.production.assetsRoot,
     filename: path.posix.join(APP_CONFIG.assetsJSFileDirectory, `[name].js?t=${APP_CONFIG.production.timeStamp}`),
-    chunkFilename: path.posix.join(APP_CONFIG.assetsJSChunksFileDirectory, `chunks/[name].js?t=${APP_CONFIG.production.timeStamp}`),
+    chunkFilename: path.posix.join(APP_CONFIG.assetsJSChunksFileDirectory, `[name].js?t=${APP_CONFIG.production.timeStamp}`),
     publicPath: APP_CONFIG.publicPath
   },
   devtool: 'cheap-module-source-map',
