@@ -49,7 +49,7 @@ const CONFIG = {
   },
   // 生产打包时生效
   injectAssets: IS_DEV ? {} : {
-    baseURL: '/static/vue/js/libs',
+    baseURL: '/static/js/libs',
     rename: (type, name) => `${name}.min.js?${BUILD_TIME.time}`,
     htmls: {
       home: {

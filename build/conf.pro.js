@@ -5,6 +5,7 @@ const APP_CONFIG = require('../app.config');
 const baseWebpack = require('./webpack.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
@@ -23,6 +24,7 @@ let plugins = [
     filename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `[name].css?t=${APP_CONFIG.production.timeStamp}`),
     chunkFilename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `chunks/[id].css?t=${APP_CONFIG.production.timeStamp}`)
   }),
+  new ManifestPlugin(),
   // new BundleAnalyzerPlugin()
 ];
 
