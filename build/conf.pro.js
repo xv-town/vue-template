@@ -5,8 +5,13 @@ const APP_CONFIG = require('../app.config');
 const baseWebpack = require('./webpack.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const isMinify = !process.env.build_test;
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
 
 const BANNER =
@@ -23,6 +28,15 @@ let plugins = [
     filename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `[name].css?t=${APP_CONFIG.production.timeStamp}`),
     chunkFilename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `chunks/[id].css?t=${APP_CONFIG.production.timeStamp}`)
   }),
+  new CopyWebpackPlugin([
+    {
+      from: APP_CONFIG.production.copyFromDirectory,
+      to: APP_CONFIG.production.copyDictDirectory
+    }
+  ]),
+  new CleanWebpackPlugin({
+    cleanBeforeEveryBuildPatterns: [APP_CONFIG.production.assetsRoot]
+  })
   // new BundleAnalyzerPlugin()
 ];
 
@@ -50,6 +64,19 @@ let newWebpack = merge(baseWebpack, {
     filename: path.posix.join(APP_CONFIG.assetsJSFileDirectory, `[name].js?t=${APP_CONFIG.production.timeStamp}`),
     chunkFilename: path.posix.join(APP_CONFIG.assetsJSChunksFileDirectory, `[name].js?t=${APP_CONFIG.production.timeStamp}`),
     publicPath: APP_CONFIG.publicPath
+  },
+  optimization: {
+    minimize: isMinify,
+    minimizer: [
+      new OptimizeCSSAssetsPlugin({
+        devtool: 'cheap-module-source-map'
+      }),
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: false
+      })
+    ],
   },
   devtool: 'cheap-module-source-map',
   plugins: plugins,

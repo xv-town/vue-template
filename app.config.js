@@ -22,7 +22,7 @@ function timeformat(time) {
 }
 
 const IP = getIPAdress();
-const PORT = 8000;
+const PORT = 8010;
 const BUILD_TIME = timeformat(new Date());
 const IS_DEV = process.env.NODE_ENV === 'development';
 
@@ -60,6 +60,7 @@ const CONFIG = {
   skeletons: require('./skeletons'),
 
   development: {
+    IP,
     url: `http://${IP}:${PORT}/vue/home`,
     port: PORT,
     templateFileSuffix: 'html', // 已编译模板后缀
@@ -87,7 +88,7 @@ const CONFIG = {
     assetsRoot: path.resolve(__dirname, './dist'),
 
     copyFromDirectory: path.resolve(__dirname, './static'), // 拷贝静态资源 源路径
-    copyDictDirectory: path.resolve(__dirname, './dist'), // 拷贝静态资源 目标路径
+    copyDictDirectory: path.resolve(__dirname, './dist/static'), // 拷贝静态资源 目标路径
   },
 };
 

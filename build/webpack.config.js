@@ -72,6 +72,7 @@ module.exports = {
       },
       { // eslint 检查
         test: /\.js?$/,
+        enforce: 'pre',
         exclude: /node_modules/,
         include: [path.join(__dirname, '../src')],
         use: [{
