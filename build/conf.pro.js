@@ -15,7 +15,7 @@ const isMinify = !process.env.build_test;
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
 
 const BANNER =
-`[name].js v ${APP_CONFIG.version}
+  `[name].js v ${APP_CONFIG.version}
 Date: ${APP_CONFIG.production.timeStamp}
 Author: ${APP_CONFIG.author}`;
 
@@ -69,7 +69,13 @@ let newWebpack = merge(baseWebpack, {
     minimize: isMinify,
     minimizer: [
       new OptimizeCSSAssetsPlugin({
-        devtool: 'cheap-module-source-map'
+        devtool: 'cheap-module-source-map',
+        cssProcessorOptions: {
+          map: {
+            inline: false,
+            annotation: true
+          }
+        }
       }),
       new TerserPlugin({
         cache: true,
