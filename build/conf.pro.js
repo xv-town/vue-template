@@ -84,7 +84,7 @@ let newWebpack = merge(baseWebpack, {
       })
     ],
   },
-  devtool: 'cheap-module-source-map',
+  // devtool: 'cheap-module-source-map',
   plugins: plugins,
 });
 
