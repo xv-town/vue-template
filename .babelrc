@@ -13,6 +13,7 @@
   ],
   "plugins": [
     "@babel/plugin-transform-runtime",
+    "transform-class-properties",
     [
       "import",
       {

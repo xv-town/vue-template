@@ -18,7 +18,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(sc|sa|c)ss$/,
+        test: /\.(less|css)$/,
         use: [
           ...(
             IS_DEV ? [
@@ -51,8 +51,11 @@ module.exports = {
             }
           },
           {
-            loader: 'sass-loader',
-            options: { sourceMap: true }
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              javascriptEnabled: true
+            }
           }
         ]
       },
