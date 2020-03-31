@@ -1,5 +1,5 @@
 <script>
-import './App.scss';
+import './App.less';
 
 export default {
   name: 'App',
