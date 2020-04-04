@@ -9,6 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isMinify = !process.env.build_test;
@@ -37,6 +38,13 @@ let plugins = [
   ]),
   new CleanWebpackPlugin({
     cleanBeforeEveryBuildPatterns: [APP_CONFIG.production.assetsRoot]
+  }),
+  new CompressionPlugin({
+    filename: '[path].gz[query]', // 目标文件名
+    algorithm: 'gzip', // 使用gzip压缩
+    // test: new RegExp('\\.(js|css)$'),  // 压缩 js 与 css
+    threshold: 10240, // 资源文件大于10240B=10kB时会被压缩
+    minRatio: 0.8 // 最小压缩比达到0.8时才会被压缩
   })
 ];
 
