@@ -9,9 +9,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isMinify = !process.env.build_test;
+const isAnalysis = !process.env.build_analysis;
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
 
 const BANNER =
@@ -37,8 +38,11 @@ let plugins = [
   new CleanWebpackPlugin({
     cleanBeforeEveryBuildPatterns: [APP_CONFIG.production.assetsRoot]
   })
-  // new BundleAnalyzerPlugin()
 ];
+
+if (isAnalysis) {
+  plugins.push(new BundleAnalyzerPlugin());
+}
 
 Object.keys(baseWebpack.entry).forEach(name => {
   let plugin = new HtmlWebpackPlugin({

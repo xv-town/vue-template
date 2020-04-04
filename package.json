@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development node ./build/dev.js",
     "build": "cross-env NODE_ENV=production node ./build/pro.js",
-    "build:test": "cross-env NODE_ENV=production build_test=true node ./build/pro.js"
+    "build:test": "cross-env NODE_ENV=production build_test=true node ./build/pro.js",
+    "build:analysis": "cross-env NODE_ENV=production build_anlysis=true node ./build/pro.js"
   },
   "autor": "<%=author%>",
   "license": "<%=license%>",

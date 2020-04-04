@@ -7,4 +7,9 @@ Entry({
   router,
   store,
   render: h => h(App),
-}).$mount('#app');
+}).then(vm => {
+  vm.$mount('#app');
+}).catch(vm => {
+  // with some error warning
+  vm.$mount('#app');
+});
