@@ -26,6 +26,7 @@ let plugins = [
   new webpack.BannerPlugin({
     banner: BANNER
   }),
+  // new webpack.optimize.ModuleConcatenationPlugin(), TODO: Scope Hoisting 暂不生效, 后续研究原因
   new MiniCssExtractPlugin({
     filename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `[name].css?t=${APP_CONFIG.production.timeStamp}`),
     chunkFilename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `chunks/[id].css?t=${APP_CONFIG.production.timeStamp}`)
@@ -97,7 +98,7 @@ let newWebpack = merge(baseWebpack, {
     ],
   },
   // devtool: 'cheap-module-source-map',
-  plugins: plugins,
+  plugins: plugins
 });
 
 module.exports = newWebpack;
