@@ -1,18 +1,26 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Micro from '@/utils/micro';
+import ProjectConfig from '../../../project.config.json';
 
+const { micro, micro_path, } = ProjectConfig;
+
+Vue.use(Micro({
+  micro,
+  micro_path,
+}));
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/vue/home',
+      path: `${micro_path}/home`,
       name: 'home',
       component: () => import(/* webpackChunkName: "home-view-index", webpackPrefetch: true */ './views/Home'),
     },
     {
-      path: '/vue/home/about',
+      path: `${micro_path}/home/about`,
       name: 'about',
       component: () => import(/* webpackChunkName: "home-view-about", webpackPrefetch: true */ './views/About'),
     },

@@ -1,5 +1,6 @@
 const path = require('path');
 const networkInterfaces = require('os').networkInterfaces();
+const projectConfig = require('./project.config.json');
 
 function getIPAdress() {
   let IP;
@@ -26,6 +27,9 @@ const PORT = 8010;
 const BUILD_TIME = timeformat(new Date());
 const IS_DEV = process.env.NODE_ENV === 'development';
 
+const MICRO_PATH = projectConfig.micro_path;
+const VUE_FOLDER = 'vue-2.6.10';
+
 const CONFIG = {
   name: 'template-js',
   version: '0.0.1',
@@ -37,9 +41,9 @@ const CONFIG = {
   assetsFileDirectory: path.resolve(__dirname, `./static`), // 静态资源路径
 
   publicPath: '/', // 打包后路径资源前缀
-  assetsJSFileDirectory: 'static/vue/js', // js 文件生成路径
-  assetsJSChunksFileDirectory: 'static/vue/js/chunks', // js chunks 文件生成路径
-  assetsCSSFileDirectory: 'static/vue/css', // css 文件生成路径
+  assetsJSFileDirectory: `static${MICRO_PATH}/js`, // js 文件生成路径
+  assetsJSChunksFileDirectory: `static${MICRO_PATH}/js/chunks`, // js chunks 文件生成路径
+  assetsCSSFileDirectory: `static${MICRO_PATH}/css`, // css 文件生成路径
 
   // 生产打包时生效
   externals: IS_DEV ? undefined : {
@@ -49,7 +53,7 @@ const CONFIG = {
   },
   // 生产打包时生效
   injectAssets: IS_DEV ? {} : {
-    baseURL: '/static/vue/js/libs',
+    baseURL: `/static/js/libs/${VUE_FOLDER}`,
     rename: (type, name) => `${name}.min.js?${BUILD_TIME.time}`,
     htmls: {
       home: {
@@ -61,15 +65,15 @@ const CONFIG = {
 
   development: {
     IP,
-    url: `http://${IP}:${PORT}/vue/home`,
+    url: `http://${IP}:${PORT}${MICRO_PATH}/home`,
     port: PORT,
     templateFileSuffix: 'html', // 已编译模板后缀
     assetsPublicPath: '/static',
     assetsFileDirectory: path.resolve(__dirname, `./static`), // 静态资源存放路径
     rewrites: [
-      { from: /\/vue\/home(\/|$)/, to: '/home.html' },
-      { from: /\/vue\/login(\/|$)/, to: '/login.html' },
-      { from: /\/vue\/mobile(\/|$)/, to: '/mobile.html' },
+      { from: new RegExp(`${MICRO_PATH}\/home(\/|$)`), to: '/home.html' },
+      { from: new RegExp(`${MICRO_PATH}\/login(\/|$)`), to: '/login.html' },
+      { from: new RegExp(`${MICRO_PATH}\/mobile(\/|$)`), to: '/mobile.html' },
     ],
     proxy: {
       // 请求代理

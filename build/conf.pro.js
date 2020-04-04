@@ -12,7 +12,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isMinify = !process.env.build_test;
-const isAnalysis = !process.env.build_analysis;
+const isAnalysis = process.env.build_analysis;
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
 
 const BANNER =
