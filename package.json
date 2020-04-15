@@ -9,7 +9,7 @@
     "build:test": "cross-env NODE_ENV=production build_test=true node ./build/pro.js",
     "build:analysis": "cross-env NODE_ENV=production build_analysis=true node ./build/pro.js"
   },
-  "autor": "<%=author%>",
+  "author": "<%=author%>",
   "license": "<%=license%>",
   "browserslist": "last 2 version, ie 9",
   "dependencies": {
