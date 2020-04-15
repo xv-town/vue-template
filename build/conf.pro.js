@@ -9,9 +9,11 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CompressionPlugin = require('compression-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isMinify = !process.env.build_test;
+const isAnalysis = process.env.build_analysis;
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
 
 const BANNER =
@@ -24,6 +26,7 @@ let plugins = [
   new webpack.BannerPlugin({
     banner: BANNER
   }),
+  // new webpack.optimize.ModuleConcatenationPlugin(), TODO: Scope Hoisting 暂不生效, 后续研究原因
   new MiniCssExtractPlugin({
     filename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `[name].css?t=${APP_CONFIG.production.timeStamp}`),
     chunkFilename: path.posix.join(APP_CONFIG.assetsCSSFileDirectory, `chunks/[id].css?t=${APP_CONFIG.production.timeStamp}`)
@@ -36,9 +39,19 @@ let plugins = [
   ]),
   new CleanWebpackPlugin({
     cleanBeforeEveryBuildPatterns: [APP_CONFIG.production.assetsRoot]
+  }),
+  new CompressionPlugin({
+    filename: '[path].gz[query]', // 目标文件名
+    algorithm: 'gzip', // 使用gzip压缩
+    // test: new RegExp('\\.(js|css)$'),  // 压缩 js 与 css
+    threshold: 10240, // 资源文件大于10240B=10kB时会被压缩
+    minRatio: 0.8 // 最小压缩比达到0.8时才会被压缩
   })
-  // new BundleAnalyzerPlugin()
 ];
+
+if (isAnalysis) {
+  plugins.push(new BundleAnalyzerPlugin());
+}
 
 Object.keys(baseWebpack.entry).forEach(name => {
   let plugin = new HtmlWebpackPlugin({
@@ -85,7 +98,7 @@ let newWebpack = merge(baseWebpack, {
     ],
   },
   // devtool: 'cheap-module-source-map',
-  plugins: plugins,
+  plugins: plugins
 });
 
 module.exports = newWebpack;

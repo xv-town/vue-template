@@ -23,6 +23,7 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // 强制 逗号结尾
-    "comma-dangle": [2, "always"]
+    "comma-dangle": [2, "always"],
+    "camelcase": 0
   }
 }

@@ -21,6 +21,12 @@ Vue.prototype['$xv:broadcast'] = function (event, payload) {
   broadcast(this.children);
 };
 
-export default function (...args) {
-  return new Vue(...args);
+function Entry (...args) {
+  return new Promise((resolve) => {
+    const vm = new Vue(...args);
+    // do something ...
+    resolve(vm);
+  });
 }
+
+export default Entry;
