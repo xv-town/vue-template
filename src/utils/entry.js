@@ -1,15 +1,15 @@
 import Vue from 'vue';
 
 // 向上通知
-Vue.prototype['$xv:dispatch'] = function (event, payload) {
+Vue.prototype['dispatch'] = function (event, payload) {
   let parent = this.$parent;
-  while (this.$parent) {
+  while (parent) {
     parent.$emit(event, payload);
-    parent = parent.parent;
+    parent = parent.$parent;
   }
 };
 // 向下广播
-Vue.prototype['$xv:broadcast'] = function (event, payload) {
+Vue.prototype['broadcast'] = function (event, payload) {
   const broadcast = children => {
     children.forEach(child => {
       child.$emit(event, payload);
@@ -18,7 +18,7 @@ Vue.prototype['$xv:broadcast'] = function (event, payload) {
       }
     });
   };
-  broadcast(this.children);
+  broadcast(this.$children);
 };
 
 function Entry (...args) {
