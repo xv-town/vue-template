@@ -23,7 +23,7 @@ function timeformat(time) {
 }
 
 const IP = getIPAdress();
-const PORT = 8010;
+const PORT = 8012;
 const BUILD_TIME = timeformat(new Date());
 const IS_DEV = process.env.NODE_ENV === 'development';
 
