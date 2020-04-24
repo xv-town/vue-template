@@ -9,11 +9,10 @@
     "build:test": "cross-env NODE_ENV=production build_test=true node ./build/pro.js",
     "build:analysis": "cross-env NODE_ENV=production build_analysis=true node ./build/pro.js"
   },
-  "autor": "<%=author%>",
+  "author": "<%=author%>",
   "license": "<%=license%>",
   "browserslist": "last 2 version, ie 9",
   "dependencies": {
-    "@babel/runtime": "7.6.3",
     "vue": "2.6.11",
     "vue-router": "3.0.3",
     "vuex": "3.0.1"
@@ -26,6 +25,7 @@
     "@vue/babel-helper-vue-jsx-merge-props": "1.0.0",
     "@vue/babel-preset-app": "3.11.0",
     "@vue/babel-preset-jsx": "1.1.0",
+    "@babel/runtime": "7.6.3",
     "assets-cdn-webpack-plugin": "1.0.1",
     "autoprefixer": "9.6.1",
     "babel-eslint": "10.0.3",
